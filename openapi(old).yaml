@@ -1,0 +1,110 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Food Order API
+  description: This is an API for a food order reciever
+paths:
+  /pickup:
+    post:
+      description: Post a new pickup order
+      operationId: app.add_pickup
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+    get:
+      description: Get a list of Pickup events between two specified times
+      operationId: app.get_pickup
+      parameters:
+      - name: startDate
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: endDate
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully return a list of Pickup events
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '400':
+          description: Bad request
+
+  /delivery:
+    post:
+      description: Post a new delivery order
+      operationId: app.add_delivery
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+      responses:
+        '200':
+          description: Successful response
+
+    get:
+      description: Get a list of Delivery events between two specified times
+      operationId: app.get_delivery
+      parameters:
+      - name: startDate
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: endDate
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully return a list of Delivery events
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '400':
+          description: Bad request
+
+components:
+    schemas:
+      Order:
+        type: object
+        required:
+          - restaurant_id
+          - user_id
+          - order_details
+          - order_time
+        properties:
+          restaurant_id:
+            type: string
+          user_id:
+            type: string
+          order_details:
+            type: object
+          order_time:
+            type: string

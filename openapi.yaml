@@ -1,0 +1,78 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Food Order API
+  description: This is an API for a food order reciever
+paths:
+  /pickup:
+    get:
+      description: Get a list of Pickup events between two specified times
+      operationId: app.get_pickup
+      parameters:
+      - name: startDate
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: endDate
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully return a list of Pickup events
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '400':
+          description: Bad request
+
+  /delivery:
+    get:
+      description: Get a list of Delivery events between two specified times
+      operationId: app.get_delivery
+      parameters:
+      - name: startDate
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: endDate
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully return a list of Delivery events
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '400':
+          description: Bad request
+
+components:
+    schemas:
+      Order:
+        type: object
+        required:
+          - restaurant_id
+          - user_id
+          - order_details
+          - order_time
+        properties:
+          restaurant_id:
+            type: string
+          user_id:
+            type: string
+          order_details:
+            type: object
+          order_time:
+            type: string
